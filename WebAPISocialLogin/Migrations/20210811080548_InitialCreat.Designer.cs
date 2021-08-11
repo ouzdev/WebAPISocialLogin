@@ -10,8 +10,8 @@ using WebAPISocialLogin.Models.Context;
 namespace WebAPISocialLogin.Migrations
 {
     [DbContext(typeof(SocialLoginContext))]
-    [Migration("20210802195931_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20210811080548_InitialCreat")]
+    partial class InitialCreat
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

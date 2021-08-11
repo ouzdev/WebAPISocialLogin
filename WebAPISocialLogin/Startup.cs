@@ -1,12 +1,14 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using WebAPISocialLogin.Models.Abstract;
+using WebAPISocialLogin.Models.Context;
 using WebAPISocialLogin.Models.EntityFramework;
 using WebAPISocialLogin.Services.Abstract;
 using WebAPISocialLogin.Services.Concrete;
@@ -30,6 +32,10 @@ namespace WebAPISocialLogin
         {
             services.AddControllers();
             services.AddCors();
+            services.AddDbContext<SocialLoginContext>(opt =>
+            {
+                opt.UseSqlServer(Configuration.GetConnectionString("SocialLoginConnection"));
+            });
 
             services.AddSwaggerGen(c =>
             {
@@ -82,7 +88,7 @@ namespace WebAPISocialLogin
             services.AddTransient<IUserDal, EfUserDal>();
 
 
-           
+
 
 
         }

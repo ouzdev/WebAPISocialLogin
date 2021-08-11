@@ -9,10 +9,16 @@ namespace WebAPISocialLogin.Models.Context
 {
     public class SocialLoginContext:DbContext
     {
+        public SocialLoginContext()
+        {
+
+        }
+        public SocialLoginContext(DbContextOptions<SocialLoginContext> options):base(options)
+        {
+
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //Scaffold - DbContext "server=DESKTOP-51P73VP; database=OG.RecapProjectDb; integrated security=true;" Microsoft.EntityFrameworkCore.SqlServer - OutputDir Models
-            optionsBuilder.UseSqlServer(@"server=DESKTOP-F09UU8L; database=OG.SocialLoginDb; integrated security=true;");
             base.OnConfiguring(optionsBuilder);
         }
         public DbSet<User> Users { get; set; }

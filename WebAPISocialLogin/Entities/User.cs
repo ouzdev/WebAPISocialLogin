@@ -14,6 +14,8 @@ namespace WebAPISocialLogin.Entities
         public string Email { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
+        public string RefreshToken { get; set; }
+        public DateTime? RefreshTokenEndDate { get; set; }
         public bool Status { get; set; }
     }
 }
