@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using WebAPISocialLogin.Entities;
 using WebAPISocialLogin.Entities.Dtos;
@@ -71,6 +72,17 @@ namespace WebAPISocialLogin.Services.Concrete
             var claims = _userService.GetClaims(user);
             var accessToken = _tokenHelper.CreateToken(user, claims.Data);
             return new SuccessDataResult<AccessToken>(accessToken, "Token Oluşturuldu");
+        }
+
+        //Refresh Token üretecek metot.
+        public string CreateRefreshToken()
+        {
+            byte[] number = new byte[32];
+            using (RandomNumberGenerator random = RandomNumberGenerator.Create())
+            {
+                random.GetBytes(number);
+                return Convert.ToBase64String(number);
+            }
         }
     }
 }

@@ -44,6 +44,10 @@ namespace WebAPISocialLogin.Controllers
             var result = _authService.CreateAccessToken(userToLogin.Data);
             if (result.Success)
             {
+               var user = _userService.GetById(userToLogin.Data.Id);
+                user.Data.RefreshToken = result.Data.RefreshToken;
+                user.Data.RefreshTokenEndDate = result.Data.Expiration.AddMinutes(5);
+                _userService.Update(user.Data);
                 return Ok(result.Data);
             }
 

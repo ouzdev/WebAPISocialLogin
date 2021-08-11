@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using WebAPISocialLogin.Entities;
 using WebAPISocialLogin.Extensions;
@@ -36,7 +37,8 @@ namespace WebAPISocialLogin.Utilities.Security.JWT
             return new AccessToken
             {
                 Token = token,
-                Expiration = _accessTokenExpiration
+                Expiration = _accessTokenExpiration,
+                RefreshToken = CreateRefreshToken()
             };
 
         }
@@ -52,6 +54,15 @@ namespace WebAPISocialLogin.Utilities.Security.JWT
                 signingCredentials: signingCredentials
             );
             return jwt;
+        }
+        public string CreateRefreshToken()
+        {
+            byte[] number = new byte[32];
+            using (RandomNumberGenerator random = RandomNumberGenerator.Create())
+            {
+                random.GetBytes(number);
+                return Convert.ToBase64String(number);
+            }
         }
         private IEnumerable<Claim> SetClaims(User user, List<OperationClaim> operationClaims)
         {

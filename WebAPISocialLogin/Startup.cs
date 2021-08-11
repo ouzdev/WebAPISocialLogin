@@ -32,11 +32,6 @@ namespace WebAPISocialLogin
         {
             services.AddControllers();
             services.AddCors();
-            services.AddDbContext<SocialLoginContext>(opt =>
-            {
-                opt.UseSqlServer(Configuration.GetConnectionString("SocialLoginConnection"));
-            });
-
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPISocialLogin", Version = "v1" });
