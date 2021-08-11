@@ -9,7 +9,7 @@ namespace WebAPISocialLogin.Migrations
         {
             migrationBuilder.CreateTable(
                 name: "OperationClaims",
-                columns: table => new
+                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
