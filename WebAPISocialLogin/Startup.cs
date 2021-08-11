@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using WebAPISocialLogin.Entities;
 using WebAPISocialLogin.Models.Abstract;
 using WebAPISocialLogin.Models.EntityFramework;
 using WebAPISocialLogin.Services.Abstract;
@@ -30,7 +31,7 @@ namespace WebAPISocialLogin
         {
             services.AddControllers();
             services.AddCors();
-
+            services.Configure<GoogleProviderOptions>(Configuration.GetSection("GoogleProviderOptions"));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPISocialLogin", Version = "v1" });
@@ -82,7 +83,7 @@ namespace WebAPISocialLogin
             services.AddTransient<IUserDal, EfUserDal>();
 
 
-           
+
 
 
         }

@@ -65,27 +65,14 @@ namespace WebAPISocialLogin.Controllers
             }
             return BadRequest(registerResult);
         }
+        
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
         public IActionResult Authenticate(AuthenticateRequest data)
         {
-            GoogleJsonWebSignature.ValidationSettings settings = new GoogleJsonWebSignature.ValidationSettings();
-
-            // Change this to your google client ID
-            settings.Audience = new List<string>() { "801016782283-784v61mh7evldvf035t0o6k6fefhvovs.apps.googleusercontent.com" };
-
-            GoogleJsonWebSignature.Payload payload = GoogleJsonWebSignature.ValidateAsync(data.IdToken, settings).Result;
-            var result = _userService.GetByMail(payload.Email);
-            if (result.Success)
-            {
-                return Ok(new { AuthToken = _authService.CreateAccessToken(new User { Email = payload.Email }) });
-
-            }
-            else
-            {
-                return Ok(result);
-            }
+          var result =  _authService.ProviderSignIn(data);
+            return Ok(result);
         }
     }
 }

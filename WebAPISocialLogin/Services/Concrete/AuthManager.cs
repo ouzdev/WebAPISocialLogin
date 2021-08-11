@@ -1,9 +1,13 @@
-﻿using System;
+﻿using Google.Apis.Auth;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebAPISocialLogin.Entities;
 using WebAPISocialLogin.Entities.Dtos;
+using WebAPISocialLogin.Entities.Enums;
 using WebAPISocialLogin.Models.Dtos;
 using WebAPISocialLogin.Services.Abstract;
 using WebAPISocialLogin.Utilities.Result;
@@ -17,11 +21,13 @@ namespace WebAPISocialLogin.Services.Concrete
     {
         private readonly IUserService _userService;
         private readonly ITokenHelper _tokenHelper;
+        private readonly GoogleProviderOptions _googleProviderOptions;
 
-        public AuthManager(IUserService userService, ITokenHelper tokenHelper)
+        public AuthManager(IUserService userService, ITokenHelper tokenHelper, IOptions<GoogleProviderOptions> googleProviderOptions)
         {
             _userService = userService;
             _tokenHelper = tokenHelper;
+            _googleProviderOptions = googleProviderOptions.Value;
         }
 
         public IDataResult<User> Register(UserForRegisterDto userForRegisterDto)
@@ -71,6 +77,49 @@ namespace WebAPISocialLogin.Services.Concrete
             var claims = _userService.GetClaims(user);
             var accessToken = _tokenHelper.CreateToken(user, claims.Data);
             return new SuccessDataResult<AccessToken>(accessToken, "Token Oluşturuldu");
+        }
+
+        public IDataResult<AccessToken> ProviderSignIn(AuthenticateRequest data)
+        {
+            if (data.Provider ==  Provider.GOOGLE.Value)
+            {
+                GoogleJsonWebSignature.ValidationSettings settings = new GoogleJsonWebSignature.ValidationSettings();
+                // Change this to your google client ID
+                settings.Audience = new List<string>() {_googleProviderOptions.ClientId };
+
+                GoogleJsonWebSignature.Payload payload = GoogleJsonWebSignature.ValidateAsync(data.IdToken, settings).Result;
+                var result = _userService.GetByMail(payload.Email);
+                if (result.Success)
+                {
+                   var result2 = CreateAccessToken(result.Data);
+                    return new SuccessDataResult<AccessToken>(result2.Data);
+
+                }
+                return new ErrorDataResult<AccessToken>("Kullanıcı Bulunamadı. Yeni Kullanıcı Oluşturulacak...");
+            }
+            else if (data.Provider == Provider.FACEBOOK.Value)
+            {
+
+            }
+            else if (data.Provider == Provider.TWITTER.Value)
+            {
+
+            }
+            else if (data.Provider == Provider.VK.Value)
+            {
+
+            }
+            else if (data.Provider == Provider.MICROSOFT.Value)
+            {
+
+            }
+            else if (data.Provider == Provider.AMAZON.Value)
+            {
+
+            }
+
+            return null;
+           
         }
     }
 }

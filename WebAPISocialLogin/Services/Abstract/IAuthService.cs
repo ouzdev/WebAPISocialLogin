@@ -16,5 +16,9 @@ namespace WebAPISocialLogin.Services.Abstract
         IDataResult<User> Login(UserForLoginDto userForLoginDto);
         IResult UserExists(string email);
         IDataResult<AccessToken> CreateAccessToken(User user);
+
+        IDataResult<AccessToken> ProviderSignIn(AuthenticateRequest data);
+       
+
     }
 }

@@ -9,6 +9,9 @@ namespace WebAPISocialLogin.Entities
     public class AuthenticateRequest
     {
         [Required]
+        public string Provider { get; set; }
+        [Required]
         public string IdToken { get; set; }
+
     }
 }
