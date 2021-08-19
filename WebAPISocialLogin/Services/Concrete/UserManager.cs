@@ -25,7 +25,12 @@ namespace WebAPISocialLogin.Services.Concrete
         public IDataResult<User> GetById(int id)
         {
             var result = _userDal.Get(u => u.Id == id);
-            return new SuccessDataResult<User>(result, "");
+            if (result == null)
+            {
+                return new ErrorDataResult<User>(result, "Kullanıcı Bulunamadı");
+
+            }
+            return new SuccessDataResult<User>(result,"Kullanıcı Getirildi");
         }
         public IDataResult<User> GetByMail(string mail)
         {

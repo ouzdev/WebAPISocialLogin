@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using WebAPISocialLogin.Entities;
 using WebAPISocialLogin.Entities.Dtos;
@@ -81,17 +82,17 @@ namespace WebAPISocialLogin.Services.Concrete
 
         public IDataResult<AccessToken> ProviderSignIn(AuthenticateRequest data)
         {
-            if (data.Provider ==  Provider.GOOGLE.Value)
+            if (data.Provider == Provider.GOOGLE.Value)
             {
                 GoogleJsonWebSignature.ValidationSettings settings = new GoogleJsonWebSignature.ValidationSettings();
                 // Change this to your google client ID
-                settings.Audience = new List<string>() {_googleProviderOptions.ClientId };
+                settings.Audience = new List<string>() { _googleProviderOptions.ClientId };
 
                 GoogleJsonWebSignature.Payload payload = GoogleJsonWebSignature.ValidateAsync(data.IdToken, settings).Result;
                 var result = _userService.GetByMail(payload.Email);
                 if (result.Success)
                 {
-                   var result2 = CreateAccessToken(result.Data);
+                    var result2 = CreateAccessToken(result.Data);
                     return new SuccessDataResult<AccessToken>(result2.Data);
 
                 }
@@ -119,7 +120,7 @@ namespace WebAPISocialLogin.Services.Concrete
             }
 
             return null;
-           
+
         }
     }
 }

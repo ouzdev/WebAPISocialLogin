@@ -44,6 +44,10 @@ namespace WebAPISocialLogin.Controllers
             var result = _authService.CreateAccessToken(userToLogin.Data);
             if (result.Success)
             {
+               var user = _userService.GetById(userToLogin.Data.Id);
+                user.Data.RefreshToken = result.Data.RefreshToken;
+                user.Data.RefreshTokenEndDate = result.Data.Expiration.AddMinutes(5);
+                _userService.Update(user.Data);
                 return Ok(result.Data);
             }
 
@@ -65,10 +69,22 @@ namespace WebAPISocialLogin.Controllers
             }
             return BadRequest(registerResult);
         }
-        
+        [HttpGet("check-user")]
+        public IActionResult CheckUser([FromQuery]string data)
+        {
+            var userExists = _authService.UserExists(data);
+
+            if (userExists.Success)
+            {
+                return Ok(userExists);
+            }
+            return Ok(userExists);
+          
+        }
+
 
         [AllowAnonymous]
-        [HttpPost("authenticate")]
+        [HttpPost("provider-signin")]
         public IActionResult Authenticate(AuthenticateRequest data)
         {
           var result =  _authService.ProviderSignIn(data);
