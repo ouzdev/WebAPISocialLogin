@@ -13,14 +13,16 @@ namespace WebAPISocialLogin.Models.EntityFramework
           where TEntity : class, IEntity, new()
           where TContext : DbContext, new()
     {
-        public void Add(TEntity entity)
+        public TEntity Add(TEntity entity)
         {
             using (TContext context = new TContext())
             {
                 var addedEntity = context.Entry(entity);
                 addedEntity.State = EntityState.Added;
                 context.SaveChanges();
+                return entity;
             }
+
         }
 
         public void Delete(TEntity entity)
@@ -53,14 +55,17 @@ namespace WebAPISocialLogin.Models.EntityFramework
             }
         }
 
-        public void Update(TEntity entity)
+        public TEntity Update(TEntity entity)
         {
             using (TContext context = new TContext())
             {
                 var updatedEntity = context.Entry(entity);
                 updatedEntity.State = EntityState.Modified;
                 context.SaveChanges();
+                return entity;
             }
         }
+
+      
     }
 }

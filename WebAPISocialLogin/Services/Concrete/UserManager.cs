@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,9 +14,14 @@ namespace WebAPISocialLogin.Services.Concrete
     public class UserManager : IUserService
     {
         private readonly IUserDal _userDal;
-        public UserManager(IUserDal userDal)
+        private readonly ISkillService _skillService;
+        private readonly IMapper _mapper;
+
+        public UserManager(IUserDal userDal, IMapper mapper, ISkillService skillService)
         {
             _userDal = userDal;
+            _mapper = mapper;
+            _skillService = skillService;
         }
         public IDataResult<List<User>> GetAll()
         {
@@ -31,7 +37,7 @@ namespace WebAPISocialLogin.Services.Concrete
                 return new ErrorDataResult<User>(result, "Kullanıcı Bulunamadı");
 
             }
-            return new SuccessDataResult<User>(result,"Kullanıcı Getirildi");
+            return new SuccessDataResult<User>(result, "Kullanıcı Getirildi");
         }
         public IDataResult<User> GetByMail(string mail)
         {
@@ -63,16 +69,18 @@ namespace WebAPISocialLogin.Services.Concrete
             _userDal.Add(user);
             return new SuccessResult("");
         }
-       
+
         public IResult Delete(User user)
         {
             _userDal.Delete(user);
             return new SuccessResult("");
         }
 
-        public IResult SetUserUpdate(User user)
+        public IResult SetUserUpdate(UserForSetUserDto userDto)
         {
-            _userDal.SetUserUpdate(user);
+            User getUser = _userDal.Get(x => x.Id == userDto.Id);
+            getUser = _mapper.Map<User>(userDto);
+
             throw new NotImplementedException();
         }
     }

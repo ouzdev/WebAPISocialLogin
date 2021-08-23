@@ -84,7 +84,8 @@ namespace WebAPISocialLogin
             services.AddTransient<ITokenHelper, JwtHelper>();
             services.AddTransient<IUserService, UserManager>();
             services.AddTransient<IUserDal, EfUserDal>();
-
+            services.AddTransient<ISkillDal, EfSkillDal>();
+            services.AddTransient<ISkillService, SkillManager>();
 
 
 

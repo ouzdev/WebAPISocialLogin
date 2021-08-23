@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebAPISocialLogin.Entities.Abstract;
 
 namespace WebAPISocialLogin.Entities
 {
-    public class Skill
+    public class Skill:IEntity
     {
         public int Id { get; set; }
         public int UserId { get; set; }
