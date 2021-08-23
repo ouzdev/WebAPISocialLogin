@@ -26,6 +26,11 @@ namespace WebAPISocialLogin.Controllers
         {
             return Ok(_userService.GetByMail(user.Email));
         }
-
+        [HttpPost("set-user")]
+        public IActionResult SetUser([FromBody] UserForSetUserDto user)
+        {
+           var result = _userService.SetUserUpdate(user);
+            return Ok(/*_userService.Update(user.Email)*/);
+        }
     }
 }

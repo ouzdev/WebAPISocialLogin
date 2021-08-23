@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebAPISocialLogin.Entities;
+using WebAPISocialLogin.Entities.Dtos;
 using WebAPISocialLogin.Utilities.Result;
 
 namespace WebAPISocialLogin.Services.Abstract
@@ -12,6 +13,7 @@ namespace WebAPISocialLogin.Services.Abstract
         IResult Add(User user);
         IResult Update(User user);
         IResult Delete(User user);
+        IResult SetUserUpdate(UserForSetUserDto user);
         IDataResult<User> GetById(int id);
         IDataResult<List<User>> GetAll();
         IDataResult<List<OperationClaim>> GetClaims(User user);

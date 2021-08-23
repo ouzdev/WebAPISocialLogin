@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebAPISocialLogin.Entities;
+using WebAPISocialLogin.Entities.Dtos;
 using WebAPISocialLogin.Models.Abstract;
 using WebAPISocialLogin.Services.Abstract;
 using WebAPISocialLogin.Utilities.Result;
@@ -69,5 +70,10 @@ namespace WebAPISocialLogin.Services.Concrete
             return new SuccessResult("");
         }
 
+        public IResult SetUserUpdate(User user)
+        {
+            _userDal.SetUserUpdate(user);
+            throw new NotImplementedException();
+        }
     }
 }

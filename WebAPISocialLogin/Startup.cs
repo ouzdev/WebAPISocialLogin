@@ -33,6 +33,7 @@ namespace WebAPISocialLogin
         {
             services.AddControllers();
             services.AddCors();
+            services.AddAutoMapper(typeof(Startup));
             services.Configure<GoogleProviderOptions>(Configuration.GetSection("GoogleProviderOptions"));
             services.AddSwaggerGen(c =>
             {
