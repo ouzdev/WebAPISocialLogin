@@ -25,6 +25,17 @@ namespace WebAPISocialLogin.Models.EntityFramework
 
         }
 
+        public IEnumerable<TEntity> AddRange(IEnumerable<TEntity> entity)
+        {
+            using (TContext context = new TContext())
+            {
+                var addedEntity = context.Entry(entity);
+                addedEntity.State = EntityState.Added;
+                context.SaveChanges();
+                return entity;
+            }
+        }
+
         public void Delete(TEntity entity)
         {
             using (TContext context = new TContext())

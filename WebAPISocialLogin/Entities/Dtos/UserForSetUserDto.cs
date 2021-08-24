@@ -11,8 +11,8 @@ namespace WebAPISocialLogin.Entities.Dtos
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public object Tel { get; set; }
-        public string ProfileAvatar { get; set; }
+        public string Tel { get; set; }
+        public string ProfileAvatarUrl { get; set; }
         public string City { get; set; }
         public string County { get; set; }
         public string Address { get; set; }

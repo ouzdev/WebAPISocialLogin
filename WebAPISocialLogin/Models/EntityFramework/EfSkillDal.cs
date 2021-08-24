@@ -10,5 +10,6 @@ namespace WebAPISocialLogin.Models.EntityFramework
 {
     public class EfSkillDal: EfEntityRepositoryBase<Skill, SocialLoginContext>, ISkillDal
     {
+      
     }
 }

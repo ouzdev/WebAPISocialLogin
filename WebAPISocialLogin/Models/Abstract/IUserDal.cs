@@ -11,6 +11,5 @@ namespace WebAPISocialLogin.Models.Abstract
     public interface IUserDal : IEntityRepository<User>
     {
         List<OperationClaim> GetClaims(User user);
-        IResult SetUserUpdate(User user);
     }
 }

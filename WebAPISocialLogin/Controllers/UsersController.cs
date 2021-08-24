@@ -19,11 +19,13 @@ namespace WebAPISocialLogin.Controllers
     {
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
+        private readonly ISkillService _skillService;
 
-        public UsersController(IUserService userService, IMapper mapper)
+        public UsersController(IUserService userService, IMapper mapper,ISkillService skillService)
         {
             _userService = userService;
             _mapper = mapper;
+            _skillService = skillService;
         }
         [HttpPost("get-user")]
         public IActionResult GetUser([FromBody] UserForInformationDto user)
@@ -34,7 +36,11 @@ namespace WebAPISocialLogin.Controllers
         public IActionResult SetUser([FromBody] UserForSetUserDto user)
         {
             var result = _userService.SetUserUpdate(user);
-            return Ok(/*_userService.Update(user.Email)*/);
+            if (result.Success)
+            {
+                return Ok(result.Message);
+            }
+            return BadRequest();
         }
     }
 }

@@ -8,5 +8,6 @@ namespace WebAPISocialLogin.Models.Abstract
 {
     public interface ISkillDal:IEntityRepository<Skill>
     {
+
     }
 }

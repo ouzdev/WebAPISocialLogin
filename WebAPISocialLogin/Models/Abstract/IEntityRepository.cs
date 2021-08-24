@@ -17,6 +17,7 @@ namespace WebAPISocialLogin.Models.Abstract
         List<T> GetAll(Expression<Func<T, bool>> filter = null);
         T Get(Expression<Func<T, bool>> filter = null);
         T Add(T entity);
+        IEnumerable<T> AddRange(IEnumerable<T> entity);
         T Update(T entity);
         void Delete(T entity);
     }

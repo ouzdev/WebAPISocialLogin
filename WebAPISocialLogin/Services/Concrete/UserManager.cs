@@ -79,9 +79,26 @@ namespace WebAPISocialLogin.Services.Concrete
         public IResult SetUserUpdate(UserForSetUserDto userDto)
         {
             User getUser = _userDal.Get(x => x.Id == userDto.Id);
-            getUser = _mapper.Map<User>(userDto);
-
-            throw new NotImplementedException();
+            getUser.Address = userDto.Address;
+            getUser.City = userDto.City;
+            getUser.County = userDto.County;
+            getUser.EducationInfo = userDto.EducationInfo;
+            getUser.ProfileAvatarUrl = userDto.ProfileAvatarUrl;
+            getUser.Tel = userDto.Tel;
+            getUser.FirstName = userDto.FirstName;
+            getUser.LastName = userDto.LastName;
+            var entity = _userDal.Update(getUser);
+            if (entity !=null)
+            {
+                List<Skill> items = new();
+                foreach (Skill item in userDto.skills)
+                {
+                 var skill =   new Skill { SkillDescription = item.SkillDescription, SkillName = item.SkillName, UserId = entity.Id };
+                 _skillService.Add(skill);
+                }
+                return new SuccessResult("Kayit Güncelleştirildi");
+            }
+            return new ErrorResult();
         }
     }
 }
