@@ -76,29 +76,29 @@ namespace WebAPISocialLogin.Services.Concrete
             return new SuccessResult("");
         }
 
-        public IResult SetUserUpdate(UserForSetUserDto userDto)
+        public IResult SetUserUpdate(User user)
         {
-            User getUser = _userDal.Get(x => x.Id == userDto.Id);
-            getUser.Address = userDto.Address;
-            getUser.City = userDto.City;
-            getUser.County = userDto.County;
-            getUser.EducationInfo = userDto.EducationInfo;
-            getUser.ProfileAvatarUrl = userDto.ProfileAvatarUrl;
-            getUser.Tel = userDto.Tel;
-            getUser.FirstName = userDto.FirstName;
-            getUser.LastName = userDto.LastName;
-            var entity = _userDal.Update(getUser);
-            if (entity !=null)
+            try
             {
-                List<Skill> items = new();
-                foreach (Skill item in userDto.skills)
-                {
-                 var skill =   new Skill { SkillDescription = item.SkillDescription, SkillName = item.SkillName, UserId = entity.Id };
-                 _skillService.Add(skill);
-                }
+                User getUser = _userDal.Get(x => x.Id == user.Id);
+                getUser.Address = user.Address;
+                getUser.City = user.City;
+                getUser.County = user.County;
+                getUser.EducationInfo = user.EducationInfo;
+                getUser.ProfileAvatarUrl = user.ProfileAvatarUrl;
+                getUser.Tel = user.Tel;
+                getUser.FirstName = user.FirstName;
+                getUser.LastName = user.LastName;
+                var entity = _userDal.Update(getUser);
                 return new SuccessResult("Kayit Güncelleştirildi");
             }
-            return new ErrorResult();
+            catch (Exception)
+            {
+
+                return new ErrorResult();
+            }
+
+
         }
     }
 }

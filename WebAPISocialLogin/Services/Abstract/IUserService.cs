@@ -13,7 +13,7 @@ namespace WebAPISocialLogin.Services.Abstract
         IResult Add(User user);
         IResult Update(User user);
         IResult Delete(User user);
-        IResult SetUserUpdate(UserForSetUserDto user);
+        IResult SetUserUpdate(User user);
         IDataResult<User> GetById(int id);
         IDataResult<List<User>> GetAll();
         IDataResult<List<OperationClaim>> GetClaims(User user);

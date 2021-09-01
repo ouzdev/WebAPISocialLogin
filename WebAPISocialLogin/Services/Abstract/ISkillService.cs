@@ -15,7 +15,7 @@ namespace WebAPISocialLogin.Services.Abstract
         IResult Update(Skill user);
         IResult Delete(Skill user);
         IDataResult<Skill> GetById(int id);
-        IDataResult<Skill> GetByUserIdForSkill(int id);
+        IDataResult<List<Skill>> GetByUserIdForSkill(int id);
 
     }
 }

@@ -30,18 +30,26 @@ namespace WebAPISocialLogin.Services.Concrete
 
         public IResult Delete(Skill user)
         {
-            throw new NotImplementedException();
+            _skillDal.Delete(user);
+            return new SuccessResult("Yetenek Silindi.");
         }
 
         public IDataResult<Skill> GetById(int id)
         {
-            throw new NotImplementedException();
+            var result = _skillDal.Get(u => u.Id == id);
+            if (result == null)
+            {
+                return new ErrorDataResult<Skill>(result, "Yetenek Bulunamadı");
+
+            }
+            return new SuccessDataResult<Skill>(result, "Yetenek Bulundu");
         }
 
-        public IDataResult<Skill> GetByUserIdForSkill(int id)
+        public IDataResult<List<Skill>> GetByUserIdForSkill(int id)
         {
-            throw new NotImplementedException();
-        }
+            List<Skill> userSkills = _skillDal.GetAll(x => x.UserId == id);
+            return new SuccessDataResult<List<Skill>>(userSkills, "Yetenekler Listelendi");
+        } 
 
         public IResult Update(Skill user)
         {

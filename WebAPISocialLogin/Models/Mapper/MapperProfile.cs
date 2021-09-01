@@ -13,6 +13,7 @@ namespace WebAPISocialLogin.Models.Mapper
         public MapperProfile()
         {
             CreateMap<UserForSetUserDto, User>();
+            CreateMap<SkillDto, Skill>();
               
         }
     }
